@@ -88,6 +88,11 @@ public class Main {
 			 * compiler/jvm may realize that these loops can be safely
 			 * interchanged enabling the calculation to be lifted out of the
 			 * inner loop leaving essentially no work to be done at runtime.
+			 *
+			 * Of course, this can only be done after inlining of the
+			 * blockIndex method (and loop invariants hold). However, this
+			 * should still be applicable to any of the BlockIndexer's
+			 * provided here.
 			 */
 			for (int i = 0; i < numIterations; i++) {
 				for (int j = 0; j < 81; j++) {
