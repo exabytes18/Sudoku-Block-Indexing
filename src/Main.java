@@ -53,21 +53,12 @@ public class Main {
 				System.out.println();
 			}
 
-			/*
-			 * Execution of the following block of code influences how fast the actual
-			 * test loops execute.
-			 */
-			/*
+			// Warmup
 			int y = 0;
 			for (int k = 0; k < 20; k++) {
-				for (int i = 0; i < 10000000; i++) {
-					for (int j = 0; j < 81; j++) {
-						y += blockIndex(j);
-					}
-				}
+				y+=loop(this, 10000000);
 			}
 			System.out.println(y);
-			*/
 
 			long start = System.nanoTime();
 			int x = 0;
@@ -78,15 +69,21 @@ public class Main {
 			 * interchanged enabling the calculation to be lifted out of the
 			 * inner loop leaving essentially no work to be done at runtime.
 			 */
-			for (int i = 0; i < numIterations; i++) {
-				for (int j = 0; j < 81; j++) {
-					x += blockIndex(j);
-				}
-			}
+			loop(this, numIterations);
 			long end = System.nanoTime();
 
 			System.out.println("Summation:\t\t\t\t" + x);
 			System.out.printf("%d iterations:\t%.3fs\n", numIterations, (end - start) / 1e9);
+		}
+
+		private static int loop(final BlockIndexer indexer, final int numIterations) {
+			int x = 0;
+			for (int i = 0; i < numIterations; i++) {
+				for (int j = 0; j < 81; j++) {
+					x += indexer.blockIndex(j);
+				}
+			}
+			return x;
 		}
 
 		abstract int blockIndex(int cellIndex);
