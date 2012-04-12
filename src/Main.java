@@ -5,7 +5,7 @@
  * 4 different approaches that use various forms of integer division, floating
  * point operations, and lookup tables to calculate the result. As with many
  * java program benchmarks, this is flawed.
- *
+ * <p/>
  * d6ec5990d5f8bbd2f970e8887afdcdf4ede36ec1ba8498e5d6d8d78556c3fcfe
  */
 public class Main {
@@ -63,23 +63,17 @@ public class Main {
 				System.out.println();
 			}
 
+			int numIterations = 10000000;
+
 			// Warmup
 			int y = 0;
 			for (int k = 0; k < 20; k++) {
-				y+=loop(this, 10000000);
+				y += loop(this, numIterations);
 			}
 			System.out.println(y);
 
 			long start = System.nanoTime();
-			int x = 0;
-			int numIterations = 10000000;
-			/*
-			 * This is a dangerous test procedure as a sufficiently smart
-			 * compiler/jvm may realize that these loops can be safely
-			 * interchanged enabling the calculation to be lifted out of the
-			 * inner loop leaving essentially no work to be done at runtime.
-			 */
-			loop(this, numIterations);
+			int x = loop(this, numIterations);
 			long end = System.nanoTime();
 
 			System.out.println("Summation:\t\t\t\t" + x);
@@ -88,6 +82,13 @@ public class Main {
 
 		private static int loop(final BlockIndexer indexer, final int numIterations) {
 			int x = 0;
+
+			/*
+			 * This is a dangerous test procedure as a sufficiently smart
+			 * compiler/jvm may realize that these loops can be safely
+			 * interchanged enabling the calculation to be lifted out of the
+			 * inner loop leaving essentially no work to be done at runtime.
+			 */
 			for (int i = 0; i < numIterations; i++) {
 				for (int j = 0; j < 81; j++) {
 					x += indexer.blockIndex(j);
