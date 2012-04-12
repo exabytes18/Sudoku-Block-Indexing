@@ -1,3 +1,13 @@
+/**
+ * Here's a fun example for screwing around with java performance. It was born
+ * out of curiousity of testing the performance of various approaches to
+ * calculating the index of a particular cell in a sudoku grid. I have included
+ * 4 different approaches that use various forms of integer division, floating
+ * point operations, and lookup tables to calculate the result. As with many
+ * java program benchmarks, this is flawed.
+ *
+ * d6ec5990d5f8bbd2f970e8887afdcdf4ede36ec1ba8498e5d6d8d78556c3fcfe
+ */
 public class Main {
 	private static final BlockIndexer intDivHeavy = new BlockIndexer("Integer Division (Heavy)") {
 		@Override
